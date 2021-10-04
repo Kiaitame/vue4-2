@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router/index';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBFoMTkDzoUVjxBIwfPCuJMgEhD9X5LV3c",
   authDomain: "vue4-c10a3.firebaseapp.com",
@@ -13,7 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 import * as firebase from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-const auth = getAuth();
 
 
 
@@ -21,27 +22,63 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    username: '',
+    mailaddress: '',
+    password: ''
+  },
+  getters:{
+    username: state => state.username,
+    mailaddress: state => state.mailaddress,
+    password: state => state.password
   },
   mutations: {
-    signUp() {
-      createUserWithEmailAndPassword(auth, this.mailaddress, this.password)
-      .then(
-        () => {
-          alert('Success')
+    signUp(context){
+      context.commit('signUpDo')
+    },
+    logindo(context){
+      context.commit('loginUser')
+    },
+    setUser(state, username){
+      state.username = username;
+    },
+    setMailaddress(state, mailaddress){
+      state.mailaddress = mailaddress;
+    },
+    setPassword(state, password){
+      state.password = password;
+    }
+  },
+  actions: {
+    signUpdo({ commit }, userInfo) {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, userInfo.mailaddress, userInfo.password)
+      .then((response) => {
+          console.log(response);
+          commit('setUser',userInfo.username)
+          commit('setMailaddress',userInfo.mailaddress)
+          commit('setPassword',userInfo.password)
+          alert(`Success`);
+          router.push({path: '/SignupDone'});
         },
         error => {
           const errorCode = error.code;
           const errorMessage = error.message;
           alert(`${errorCode} \n ${errorMessage}`);
+          router.push('/');
         }
       )
     },
-    loginUser(){
-      signInWithEmailAndPassword(auth,this.mailaddress,this.password)
-      .then(() => {
-          this.$router.push('/Home');
-          // const user = userCredential.user;
-          // alert(`Success! Hello ${user.name}`);
+    loginUser({ commit }, userInfo){
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth,userInfo.mailaddress,userInfo.password)
+      .then((userCredential) => {
+        commit('setUser',userInfo.username)
+        commit('setMailaddress',userInfo.mailaddress)
+        commit('setPassword',userInfo.password)
+        alert(`Success`);
+        this.$router.push('/Home');
+        const user = userCredential.user;
+        alert(`Success! Hello ${user.name}`);
         }
       )
       .catch((error) => {
@@ -51,12 +88,6 @@ export default new Vuex.Store({
         alert(`errorcode:${errorCode} \n errormessage:${errorMessage}`);
       })
     }
-  },
-  actions: {
-    signUpdo(context){
-    context.commit('signUp')},
-    logindo(context){
-      context.commit('loginUser')},
   },
   modules: {
   }

@@ -11,20 +11,20 @@
         <tbody>
           <tr>
             <label>ユーザ名</label>
-            <input type="text" v-model="username">
+            <input type="text" v-model="userInfo.username">
           </tr>
           <tr>
             <label>メールアドレス</label>
-            <input type="text" v-model="mailaddress">
+            <input type="text" v-model="userInfo.mailaddress">
           </tr>
           <tr>
             <label>パスワード</label>
-            <input type="text" v-model="password">
+            <input type="text" v-model="userInfo.password">
           </tr>
         </tbody>
       </table>
     </form>
-    <router-link to="/SignupDone"><button type="submit" v-on:click="signToUp">新規登録</button></router-link>
+    <button type="submit" v-on:click="signToUp">新規登録</button>
     <router-link to="/Login"><p>ログインはこちらから</p></router-link>
     <footer>Copyright ©2021 XX Inc All rights reserved.</footer>
   </div>
@@ -44,10 +44,8 @@ const firebaseConfig = {
     measurementId: "G-YSGBCZJTF8"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  import * as firebase from 'firebase/app';
-  // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-  // const auth = getAuth();
+firebase.initializeApp(firebaseConfig);
+import * as firebase from 'firebase/app';
   export default {
   name: 'CreateUser',
   props: {
@@ -55,38 +53,17 @@ const firebaseConfig = {
   },
   data(){
     return{
-      username: '',
-      mailaddress: '',
-      password: ''
-    }
-  },
-  computed:{
-    mailAdd: {
-      get(){
-          return this.$store.getters.getMailaddress;
-      },
-      set(value){
-          this.$store.commit('setMailaddress',value);
+      userInfo: {
+        username: '',
+        mailaddress: '',
+        password: ''
       }
+    }
   },
   methods: {
-    signToUp: function(){
-      this.$store.dispatch('signUpdo')
+    signToUp(){
+      this.$store.dispatch('signUpdo',this.userInfo);
     }
-    // signUp() {
-    //   createUserWithEmailAndPassword(auth, this.mailaddress, this.password)
-    //   .then(
-    //     user => {
-    //       alert('Success')
-    //     },
-    //     error => {
-    //       const errorCode = error.code;
-    //       const errorMessage = error.message;
-    //       alert(errorMessage);
-    //     }
-    //   )
-    // }
-   }
   }
 }
 </script>
