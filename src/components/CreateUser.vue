@@ -24,7 +24,7 @@
         </tbody>
       </table>
     </form>
-    <button type="submit" v-on:click="signToUp">新規登録</button>
+    <button type="submit" v-on:click="signUp">新規登録</button>
     <router-link to="/Login"><p>ログインはこちらから</p></router-link>
     <footer>Copyright ©2021 XX Inc All rights reserved.</footer>
   </div>
@@ -34,18 +34,6 @@
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <script>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBFoMTkDzoUVjxBIwfPCuJMgEhD9X5LV3c",
-    authDomain: "vue4-c10a3.firebaseapp.com",
-    projectId: "vue4-c10a3",
-    storageBucket: "vue4-c10a3.appspot.com",
-    messagingSenderId: "715978564664",
-    appId: "1:715978564664:web:65e32995b20661d4a2f2cd",
-    measurementId: "G-YSGBCZJTF8"
-  };
-
-firebase.initializeApp(firebaseConfig);
-import * as firebase from 'firebase/app';
   export default {
   name: 'CreateUser',
   props: {
@@ -61,8 +49,8 @@ import * as firebase from 'firebase/app';
     }
   },
   methods: {
-    signToUp(){
-      this.$store.dispatch('signUpdo',this.userInfo);
+    signUp(){
+      this.$store.dispatch('registerUser',this.userInfo);
     }
   }
 }
