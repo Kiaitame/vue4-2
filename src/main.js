@@ -13,8 +13,10 @@ const firebaseConfig = {
   measurementId: "G-YSGBCZJTF8"
 };
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 firebase.initializeApp(firebaseConfig);
-import * as firebase from 'firebase/app';
 
 
 Vue.config.productionTip = false

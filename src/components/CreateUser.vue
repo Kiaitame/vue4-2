@@ -11,20 +11,20 @@
         <tbody>
           <tr>
             <label>ユーザ名</label>
-            <input type="text" v-model="username">
+            <input type="text" v-model="userInfo.username">
           </tr>
           <tr>
             <label>メールアドレス</label>
-            <input type="text" v-model="mailaddress">
+            <input type="text" v-model="userInfo.mailaddress">
           </tr>
           <tr>
             <label>パスワード</label>
-            <input type="text" v-model="password">
+            <input type="text" v-model="userInfo.password">
           </tr>
         </tbody>
       </table>
     </form>
-    <router-link to="/SignupDone"><button type="submit" v-on:click="signToUp">新規登録</button></router-link>
+    <button type="submit" v-on:click="signUp">新規登録</button>
     <router-link to="/Login"><p>ログインはこちらから</p></router-link>
     <footer>Copyright ©2021 XX Inc All rights reserved.</footer>
   </div>
@@ -34,20 +34,6 @@
 <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <script>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBFoMTkDzoUVjxBIwfPCuJMgEhD9X5LV3c",
-    authDomain: "vue4-c10a3.firebaseapp.com",
-    projectId: "vue4-c10a3",
-    storageBucket: "vue4-c10a3.appspot.com",
-    messagingSenderId: "715978564664",
-    appId: "1:715978564664:web:65e32995b20661d4a2f2cd",
-    measurementId: "G-YSGBCZJTF8"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  import * as firebase from 'firebase/app';
-  // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-  // const auth = getAuth();
   export default {
   name: 'CreateUser',
   props: {
@@ -55,38 +41,17 @@ const firebaseConfig = {
   },
   data(){
     return{
-      username: '',
-      mailaddress: '',
-      password: ''
-    }
-  },
-  computed:{
-    mailAdd: {
-      get(){
-          return this.$store.getters.getMailaddress;
-      },
-      set(value){
-          this.$store.commit('setMailaddress',value);
+      userInfo: {
+        username: '',
+        mailaddress: '',
+        password: ''
       }
+    }
   },
   methods: {
-    signToUp: function(){
-      this.$store.dispatch('signUpdo')
+    signUp(){
+      this.$store.dispatch('registerUser',this.userInfo);
     }
-    // signUp() {
-    //   createUserWithEmailAndPassword(auth, this.mailaddress, this.password)
-    //   .then(
-    //     user => {
-    //       alert('Success')
-    //     },
-    //     error => {
-    //       const errorCode = error.code;
-    //       const errorMessage = error.message;
-    //       alert(errorMessage);
-    //     }
-    //   )
-    // }
-   }
   }
 }
 </script>
