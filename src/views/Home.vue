@@ -1,24 +1,17 @@
 <template>
   <div class="Home">
-    <h1>{{ msg }}</h1>
-    <h1>{{ user }}</h1>
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HomeUser />
   </div>
 </template>
 
 <script>
+import HomeUser from '../components/HomeUser.vue'
 
 export default {
-  data() {
-    return {
-      msg: 'Welcome to Home page',
-    }
-  },
-  computed:{
-    user:{
-    get(){
-      return this.$store.getters.username;
-    }
-    }
+  name: 'Home',
+  components: {
+    HomeUser
   }
 }
 </script>

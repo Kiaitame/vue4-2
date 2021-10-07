@@ -10,12 +10,14 @@ export default new Vuex.Store({
   state: {
     username: '',
     mailaddress: '',
-    password: ''
+    password: '',
+    balance: 0
   },
   getters:{
     username: state => state.username,
     mailaddress: state => state.mailaddress,
-    password: state => state.password
+    password: state => state.password,
+    balance: state => state.balance
   },
   mutations: {
     signUp(context){
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     setPassword(state, password){
       state.password = password;
+    },
+    setBalance(state,balance){
+      state.balance = balance;
     }
   },
   actions: {
