@@ -1,7 +1,8 @@
 <template>
   <div class="homeuser">
-    <h1>{{ user }}{{ msg }}</h1>
+    <h1>{{ user }}さんようこそ</h1>
     <p>残高：{{ balance }}</p>
+    <button class="logout" v-on:click="logout">ログアウト</button>
     <footer>Copyright ©2021 XX Inc All rights reserved.</footer>
   </div>
 </template>
@@ -14,7 +15,7 @@
     name: 'HomeUser',
     data() {
     return {
-      msg: 'さんようこそ',
+        
     }
     },
   computed:{
@@ -28,6 +29,11 @@
             return this.$store.getters.balance;
         }
     }
+  },
+  methods:{
+      logout(){
+          this.$store.dispatch('logoutUser');
+      }
   }
 }
 </script>
@@ -48,5 +54,8 @@ footer {
     padding: 20px 0;
     margin: 20px 0;
 }
-
+.logout {
+    display: block;
+    margin: 0 0 0 auto;
+}
 </style>

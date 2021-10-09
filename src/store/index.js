@@ -20,12 +20,6 @@ export default new Vuex.Store({
     balance: state => state.balance
   },
   mutations: {
-    signUp(context){
-      context.commit('registerUser')
-    },
-    logindo(context){
-      context.commit('loginUser')
-    },
     setUser(state, username){
       state.username = username;
     },
@@ -72,6 +66,18 @@ export default new Vuex.Store({
       )
       .catch((error) => {
         router.push('/Login');
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`errorcode:${errorCode} \n errormessage:${errorMessage}`);
+      })
+    },
+    logoutUser(){
+      firebase.auth().signOut()
+      .then(() => {
+        alert('ログアウトしました');
+        router.push('/Login');
+      })
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         alert(`errorcode:${errorCode} \n errormessage:${errorMessage}`);
